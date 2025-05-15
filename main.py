@@ -1,8 +1,11 @@
-import openai
+from openai import OpenAI
+client = OpenAI()
 import streamlit as st
 
 import os
-openai.api_key = os.environ["OPENAI_API_KEY"]
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 import pandas as pd
 
 # Carica il file CSV
@@ -37,14 +40,16 @@ if user_input:
 
 client = OpenAI()
 
-response = client.chat.completions.create(
+import openai
+
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
+response = openai.ChatCompletion.create(
     model="gpt-4o",
     messages=[
         {"role": "system", "content": "Sei un sommelier italiano esperto. Consiglia vini..."},
         {"role": "user", "content": user_input}
     ]
 )
-        ]
-    )
     st.markdown("### Consiglio del sommelier:")
     st.write(response.choices[0].message["content"])
