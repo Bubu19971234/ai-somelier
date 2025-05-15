@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ai-sommelier
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "streamlit run main.py --server.port=10000 --server.enableCORS=false"
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
