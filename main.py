@@ -1,7 +1,8 @@
 import openai
 import streamlit as st
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+import os
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 st.title("AI Sommelier – Il tuo consigliere di vini")
 
