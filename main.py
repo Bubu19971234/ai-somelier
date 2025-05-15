@@ -37,7 +37,7 @@ if user_input:
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "Sei un sommelier italiano esperto. Consiglia vini perfetti per ogni piatto o occasione, con spiegazioni semplici e professionali."},
-            {{"role": "user", "content": prompt}
+            {"role": "user", "content": prompt}
         ]
     )
     st.markdown("### Consiglio del sommelier:")
