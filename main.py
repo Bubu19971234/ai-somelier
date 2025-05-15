@@ -25,7 +25,6 @@ filtrati = df[
     (df["Vitigno"] == vitigno) &
     (df["Prezzo"] <= budget)
 ]
-
 # Mostra il consiglio o un messaggio se non trovato
 if not filtrati.empty:
     vino = filtrati.sample(1).iloc[0]  # Sceglie un vino a caso tra quelli filtrati
