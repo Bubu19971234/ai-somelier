@@ -49,4 +49,4 @@ if user_input:
         ]
     )
     st.markdown("### Consiglio del sommelier:")
-    st.write(response.choices[0].message["content"])
+st.write(response.choices[0].message.content)
