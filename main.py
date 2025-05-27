@@ -9,6 +9,8 @@ client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 # Carica i CSV
 df_vini = pd.read_csv("data/vini.csv")
 df_piatti = pd.read_csv("data/piatti.csv")
+st.write("Colonne del file vini.csv:", df_vini.columns.tolist())
+df_vini.columns = df_vini.columns.str.strip()  # rimuove spazi
 
 # Rinomina colonne per uniformità
 df_vini = df_vini.rename(columns={"Nome Vino": "Nome"})
