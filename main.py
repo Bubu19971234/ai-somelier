@@ -22,7 +22,7 @@ budget = st.slider("Budget massimo per la bottiglia (€)", 10, 250, 60)
 vini_filtrati = df_vini[df_vini["Prezzo"] <= budget]
 
 if piatto_selezionato:
-descrizione_piatto = df_piatti[df_piatti["Nome Piatto"] == piatto_selezionato]["Descrizione"].values[0]
+    descrizione_piatto = df_piatti[df_piatti["Nome Piatto"] == piatto_selezionato]["Descrizione"].values[0]
     # Prepara lista vini formattata per prompt
     lista_vini = "\n".join(
         f"- {row['Nome vino']} ({row['Tipo']}, {row['Vitigno']}), €{row['Prezzo (€)']}: {row['Descrizione']}"
