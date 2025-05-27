@@ -14,8 +14,7 @@ df_piatti = pd.read_csv("data/piatti.csv")
 st.title("Sommelier Digitale per Ristoranti")
 
 # Dropdown piatti
-piatto_selezionato = st.selectbox("Seleziona il piatto ordinato", df_piatti["Nome"])
-
+piatto_selezionato = st.selectbox("Seleziona il piatto ordinato", df_piatti["Nome Piatto"])
 # Budget
 budget = st.slider("Budget massimo per la bottiglia (€)", 10, 250, 60)
 
@@ -23,11 +22,10 @@ budget = st.slider("Budget massimo per la bottiglia (€)", 10, 250, 60)
 vini_filtrati = df_vini[df_vini["Prezzo"] <= budget]
 
 if piatto_selezionato:
-    descrizione_piatto = df_piatti[df_piatti["Nome"] == piatto_selezionato]["Descrizione"].values[0]
-
+descrizione_piatto = df_piatti[df_piatti["Nome Piatto"] == piatto_selezionato]["Descrizione"].values[0]
     # Prepara lista vini formattata per prompt
     lista_vini = "\n".join(
-        f"- {row['Nome']} ({row['Tipo']}, {row['Vitigno']}), €{row['Prezzo']}: {row['Descrizione']}"
+        f"- {row['Nome vino']} ({row['Tipo']}, {row['Vitigno']}), €{row['Prezzo (€)']}: {row['Descrizione']}"
         for _, row in vini_filtrati.iterrows()
     )
 
