@@ -92,15 +92,17 @@ def get_color(score):
     else:
         return "#F44336"
 
-def mostra_vino(titolo, compat, testo):
+def mostra_vino(titolo, compat, descrizione):
     colore = get_color(compat)
     st.markdown(f"""
         <div class="wine-box">
             <div class="wine-title">{titolo}</div>
             <div class="compatibility-badge" style="background-color:{colore}">
-                CompatibilitÃ : {compat}%
+                Compatibilità: {compat}%
             </div>
-            <div>{testo}</div>
+            <div style="margin-top:10px; font-size:16px; color:#000;">
+                {descrizione}
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
