@@ -4,22 +4,13 @@ import os
 import re
 from openai import OpenAI
 
-# Inizializza OpenAI
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-
-# Carica CSV
-df_vini = pd.read_csv("data/vini.csv")
-df_piatti = pd.read_csv("data/piatti.csv")
-df_vini.columns = df_vini.columns.str.strip()
-df_vini = df_vini.rename(columns={"Nome Vino": "Nome"})
-df_piatti = df_piatti.rename(columns={"Nome Piatto": "Nome"})
-
-# STILE CSS
+# Imposta layout e forza sfondo bianco
+st.set_page_config(layout="centered")
 st.markdown("""
     <style>
     html, body, .main {
-        background-color: white;
-        color: black;
+        background-color: white !important;
+        color: black !important;
     }
     .block-container {
         padding-top: 2rem;
@@ -58,11 +49,21 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Titolo con gradiente
+# Inizializza OpenAI
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+# Carica CSV
+df_vini = pd.read_csv("data/vini.csv")
+df_piatti = pd.read_csv("data/piatti.csv")
+df_vini.columns = df_vini.columns.str.strip()
+df_vini = df_vini.rename(columns={"Nome Vino": "Nome"})
+df_piatti = df_piatti.rename(columns={"Nome Piatto": "Nome"})
+
+# Titolo
 st.markdown('<div class="gradient-title">AI Sommelier per Ristoranti</div>', unsafe_allow_html=True)
 
-# Selezione numero di partecipanti e piatti
-numero_commensali = st.slider("ð¥ Quanti siete a cena?", 1, 6, 2)
+# Numero commensali
+numero_commensali = st.slider("Quanti siete a cena?", 1, 6, 2)
 
 piatti_selezionati = []
 for i in range(numero_commensali):
@@ -104,7 +105,7 @@ def mostra_vino(titolo, compat, testo):
     """, unsafe_allow_html=True)
 
 # Bottone per attivare ricerca
-if st.button("ð· Consigliami"):
+if st.button("Consigliami"):
     if piatti_selezionati and not vini_filtrati.empty:
         descrizioni = []
         for piatto in piatti_selezionati:
@@ -136,13 +137,16 @@ Consiglia 3 vini adatti allâinsieme dei piatti. Per ogni vino, indica:
             ]
         )
 
-        st.markdown("### ð§  Proposte del sommelier per il tavolo:")
+        st.markdown("### Proposte del sommelier per il tavolo:")
         output = response.choices[0].message.content.split("\n\n")
         for blocco in output:
             if "%" in blocco:
                 righe = blocco.strip().split("\n")
                 nome = righe[0].strip()
-                percentuale = next((int(re.search(r'\\d+', s).group()) for s in righe if '%' in s), 0)
+                percentuale = next((
+                    int(m.group()) for s in righe if '%' in s
+                    for m in [re.search(r'\d+', s)] if m
+                ), 0)
                 descrizione = " ".join(righe[1:])
                 mostra_vino(nome, percentuale, descrizione)
 
